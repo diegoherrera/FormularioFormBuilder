@@ -1,8 +1,61 @@
-<h1>{{title}}</h1>
-<nav [ngClass] = "'menu'">
-   <a routerLink="/books" routerLinkActive="active-link">books</a> | 
-   <a routerLink="/add" routerLinkActive="active-link">Add Book</a> 
-</nav>  
-<div>	
-  <router-outlet></router-outlet>	
+<div class="container">
+  <h1>Formularios</h1>
+  <div class="row">
+    <div class="col-sm-6">
+      <form [formGroup]="userForm" (ngSubmit)="onFormSubmit()">
+        <div class="form-group">
+          <label for="usr">Nombre:</label>
+          <input type="text" formControlName="Nombre" class="form-control">
+          <label *ngIf="this.userForm.get('Nombre').invalid && this.userForm.get('Nombre').dirty" [ngClass]="'error'"> 
+            Name required with max 15 character.
+          </label>
+        </div>
+        <br>
+        <div class="form-group">
+          <label for="usr">Apellido:</label>
+          <input type="text" formControlName="Apellido" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="usr">Edad:</label>
+          <input type="text" formControlName="Edad" class="form-control">
+        </div>
+
+        <div class="form-group">
+          <select formControlName="Perfil" (change)="onPerfilChange()">
+            <option [ngValue]="null" disabled>Selecciona Perfil</option>
+            <option *ngFor="let prf of AllPerfiles" [ngValue]="prf">
+             {{ prf.prName }}
+            </option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <select formControlName="SubPerfil" (change)="onSubPerfilChange()">
+            <option *ngFor="let prf of AllSubPerfiles" [ngValue]="prf">
+             {{ prf.prName }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <button (click)="setOneValue()">Set Un valor</button>
+        </div>
+        <div class="form-group">
+          <button (click)="setAllValue()">Set Todos los valores</button>
+        </div>
+        <div class="form-group">
+          <button type="button" (click)="resetForm()">Reset</button>
+        </div>
+
+        
+        
+        
+        <br>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+    <div class="col-sm-6">
+      {{ userForm }}
+    </div>
+  </div>
 </div>
